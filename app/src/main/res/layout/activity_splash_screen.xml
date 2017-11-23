@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="#F9F9F9"
+    tools:context="com.ske13.ntk.wip.SplashScreen">
+
+    <ImageView
+        android:id="@+id/logo_splash"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/wip_icon"
+        android:adjustViewBounds="true"
+        android:maxWidth="120dp"
+        android:maxHeight="120dp"
+        android:scaleType="fitCenter"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logo_splash"
+        android:text="WIP"
+        android:textAlignment="center"
+        android:textColor="#6B58D9"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"/>
+
+</RelativeLayout>
