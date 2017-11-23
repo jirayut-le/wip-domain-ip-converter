@@ -1,29 +1,32 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/Layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:background="@drawable/gradient_list"
     tools:context="com.ske13.ntk.wip.FullscreenActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc. -->
 
-
-    <ImageView
-        android:id="@+id/logo"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:maxWidth="100dp"
-        android:maxHeight="100dp"
-        android:scaleType="fitCenter"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        app:srcCompat="@drawable/wip_icon_w" />
+        android:layout_height="match_parent"
+        android:id="@+id/Layout"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@drawable/gradient_list">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:maxWidth="100dp"
+            android:maxHeight="100dp"
+            android:scaleType="fitCenter"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            app:srcCompat="@drawable/wip_icon_w" />
         <TextView
             android:id="@+id/fullscreen_content"
             android:layout_width="match_parent"
@@ -45,7 +48,6 @@
             android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
             android:background="@drawable/edit_text_style"
-            android:cursorVisible="true"
             android:ems="10"
             android:hint="Domain name or IP Address"
             android:inputType="textPersonName"
@@ -67,5 +69,48 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_below="@id/input"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/resultLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/Layout"
+        android:orientation="vertical"
+        android:background="#F9F9F9"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginTop="20dp"
+            android:text="Result"/>
+
+        <TextView
+            android:id="@+id/result"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/text_view_result_style"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="Country"/>
+
+        <TextView
+            android:id="@+id/country"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/text_view_result_style"/>
+
+
+    </LinearLayout>
 
 </RelativeLayout>
