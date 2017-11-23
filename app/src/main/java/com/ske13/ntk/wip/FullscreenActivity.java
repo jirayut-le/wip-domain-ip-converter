@@ -1,14 +1,20 @@
 package com.ske13.ntk.wip;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.media.Image;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -78,6 +84,37 @@ public class FullscreenActivity extends AppCompatActivity {
         animationDrawable.setExitFadeDuration(4000);
 //        animationDrawable.start();
 
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resize();
+            }
+        });
+
+    }
+
+    private void resize(){
+        resizeLayout();
+        hideTitle();
+        resizeIcon();
+    }
+
+    private void resizeLayout(){
+        RelativeLayout relativeLayout = findViewById(R.id.Layout);
+        ViewGroup.LayoutParams params = relativeLayout.getLayoutParams();
+        params.height = 750;
+        relativeLayout.setLayoutParams(params);
+    }
+
+    private void hideTitle(){
+        TextView textView = findViewById(R.id.fullscreen_content);
+        textView.setVisibility(View.GONE);
+    }
+
+    private void resizeIcon(){
+        ImageView image = findViewById(R.id.logo);
+        image.setMaxHeight(150);
     }
 
     @Override
