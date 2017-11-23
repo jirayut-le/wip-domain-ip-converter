@@ -1,20 +1,22 @@
 package com.ske13.ntk.wip;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
-import android.media.Image;
+import android.os.StrictMode;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import static com.ske13.ntk.wip.Converter.convert;
+
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -29,6 +31,8 @@ public class FullscreenActivity extends AppCompatActivity {
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
     private View mContentView;
+    private EditText editText;
+    private TextView resultTextView;
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
         @Override
@@ -75,8 +79,15 @@ public class FullscreenActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_fullscreen);
 
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
         mVisible = true;
         mContentView = findViewById(R.id.fullscreen_content);
+        editText = findViewById(R.id.input);
+        resultTextView = findViewById(R.id.result);
 
         RelativeLayout relativeLayout = findViewById(R.id.Layout);
         AnimationDrawable animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
@@ -88,10 +99,16 @@ public class FullscreenActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                submit();
                 resize();
             }
         });
 
+    }
+
+    private void submit(){
+        String result = convert(editText.getText().toString());
+        this.resultTextView.setText(result);
     }
 
     private void resize(){
