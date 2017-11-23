@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="#F9F9F9"
+    android:background="@color/light_grey"
     tools:context="com.ske13.ntk.wip.SplashScreen">
 
     <ImageView
@@ -23,7 +23,7 @@
         android:layout_below="@+id/logo_splash"
         android:text="WIP"
         android:textAlignment="center"
-        android:textColor="#6B58D9"
+        android:textColor="@color/violet"
         android:textSize="50sp"
         android:textStyle="bold"
         android:layout_marginTop="10dp"/>

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">WIP</string>
-
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="hint_input">Domain name or IP Address</string>
+    <string name="submit">SUBMIT</string>
+    <string name="result">Result</string>
+    <string name="country">Country</string>
 </resources>
