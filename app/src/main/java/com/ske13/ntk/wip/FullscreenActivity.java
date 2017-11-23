@@ -1,12 +1,14 @@
 package com.ske13.ntk.wip;
 
 import android.annotation.SuppressLint;
+import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -89,6 +91,12 @@ public class FullscreenActivity extends AppCompatActivity {
 
         mVisible = true;
         mContentView = findViewById(R.id.fullscreen_content);
+
+        RelativeLayout relativeLayout = findViewById(R.id.Layout);
+        AnimationDrawable animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
+        animationDrawable.setEnterFadeDuration(2000);
+        animationDrawable.setExitFadeDuration(4000);
+        animationDrawable.start();
 
 
         // Set up the user interaction to manually show or hide the system UI.
