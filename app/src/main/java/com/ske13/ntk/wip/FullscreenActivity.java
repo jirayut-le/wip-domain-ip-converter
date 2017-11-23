@@ -49,7 +49,6 @@ public class FullscreenActivity extends AppCompatActivity {
                     | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         }
     };
-    private View mControlsView;
     private final Runnable mShowPart2Runnable = new Runnable() {
         @Override
         public void run() {
@@ -58,7 +57,6 @@ public class FullscreenActivity extends AppCompatActivity {
             if (actionBar != null) {
                 actionBar.show();
             }
-            mControlsView.setVisibility(View.VISIBLE);
         }
     };
     private boolean mVisible;
@@ -90,7 +88,6 @@ public class FullscreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fullscreen);
 
         mVisible = true;
-//        mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
 
 
@@ -132,7 +129,6 @@ public class FullscreenActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
-//        mControlsView.setVisibility(View.GONE);
         mVisible = false;
 
         // Schedule a runnable to remove the status and navigation bar after a delay
