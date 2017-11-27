@@ -1,17 +1,29 @@
 package com.ske13.ntk.wip;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 /**
  * Created by macbook on 24/11/2017 AD.
  */
 
 
-public class Converter {
+public class Converter  {
 
-    public static String convert(String input){
-        return (isIP(input)) ? convertByIp(input) : convertByName(input);
+    private static ArrayList<String> data = new ArrayList<String>();
+
+    public static ArrayList<String> convert(String input){
+        data.clear();
+        if(isIP(input))
+            convertByIp(input);
+        else convertByName(input);
+        getLocation(input);
+        return data;
     }
 
     private static boolean isIP(String input){
@@ -21,33 +33,26 @@ public class Converter {
         return false;
     }
 
-
-    private static String convertByName(String name) {
+    private static void convertByName(String name) {
         String hostAddress;
         try {
             InetAddress inetHost = InetAddress.getByName(name);
             hostAddress = inetHost.getHostAddress();
-            System.out.println("The host IP address is: " + hostAddress);
-            System.out.println();
-
+            data.add(hostAddress);
         } catch(UnknownHostException ex) {
             System.out.println("Unrecognized host");
-            return "Unrecognized host";
         }
-        return hostAddress;
 
     }
 
-    private static String convertByIp(String ip){
+    private static void convertByIp(String ip){
 
         try {
             InetAddress host = InetAddress.getByName(ip);
             String hostName = host.getHostName();
-            System.out.println("Domain name is: "+ hostName);
-            return hostName;
+            data.add(hostName);
         } catch (UnknownHostException ex) {
             ex.printStackTrace();
-            return "Error";
         }
     }
 
@@ -72,7 +77,59 @@ public class Converter {
 
     }
 
-    public static String longToIp(long ip) {
-        return ((ip >> 24) & 0xFF) + "." + ((ip >> 16) & 0xFF) + "." + ((ip >> 8) & 0xFF) + "." + (ip & 0xFF);
+    private static void getLocation(String name){
+        Location location = new Location();
+        String response = null;
+        try {
+            response = location.run("https://freegeoip.net/json/" + name);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            response = response.replace(",", "},{");
+            ArrayList<String> arrayList = jsonStringToArray("[" + response +"]");
+            addData(arrayList);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
+
+    private static void addData(ArrayList<String> arrayList){
+        data.add(getCountry(arrayList));
+        data.add(getLatitude(arrayList));
+        data.add(getLongitude(arrayList));
+    }
+
+    private static String getCountry(ArrayList<String> text){
+        String temp = text.get(2).toString().substring(17);
+        temp = temp.substring(0,temp.length()-2);
+        return temp;
+    }
+
+    private static String getLatitude(ArrayList<String> text){
+        String latitude = text.get(8).toString().substring(12);
+        latitude = latitude.substring(0,latitude.length()-1);
+        return latitude;
+    }
+
+    private static String getLongitude(ArrayList<String> text){
+        String longitude = text.get(9).toString().substring(13);
+        longitude = longitude.substring(0,longitude.length()-1);
+        return longitude;
+    }
+
+    private static ArrayList<String> jsonStringToArray(String jsonString) throws JSONException {
+
+        ArrayList<String> stringArray = new ArrayList<String>();
+        JSONArray jsonArray = new JSONArray(jsonString);
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            stringArray.add(jsonArray.getString(i));
+        }
+
+        return stringArray;
+    }
+
 }

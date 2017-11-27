@@ -5,10 +5,6 @@
     android:layout_height="match_parent"
     tools:context="com.ske13.ntk.wip.FullscreenActivity">
 
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -70,51 +66,63 @@
             android:textStyle="bold"
             android:layout_below="@id/input"/>
     </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/resultLayout"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/Layout"
-        android:orientation="vertical"
-        android:background="@color/light_grey"
-        android:gravity="center_horizontal">
+        android:layout_below="@id/Layout">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:layout_marginTop="20dp"
-            android:text="@string/result"/>
-
-        <TextView
-            android:id="@+id/result"
-            android:layout_width="300dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="15dp"
-            android:textSize="18sp"
-            android:textColor="@color/dark_grey"
-            android:gravity="center"
-            android:background="@drawable/text_view_result_style"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:text="@string/country"/>
-
-        <TextView
-            android:id="@+id/country"
-            android:layout_width="300dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:textSize="18sp"
-            android:textColor="@color/dark_grey"
-            android:gravity="center"
-            android:background="@drawable/text_view_result_style"/>
+        <LinearLayout
+            android:id="@+id/resultLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/Layout"
+            android:orientation="vertical"
+            android:background="@color/light_grey"
+            android:gravity="center_horizontal">
 
 
-    </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_marginTop="20dp"
+                android:text="@string/result"/>
+
+            <TextView
+                android:id="@+id/result"
+                android:layout_width="300dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
+                android:textSize="18sp"
+                android:textColor="@color/dark_grey"
+                android:gravity="center"
+                android:background="@drawable/text_view_result_style"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="@string/country"/>
+
+            <TextView
+                android:id="@+id/country"
+                android:layout_width="300dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp"
+                android:textSize="18sp"
+                android:textColor="@color/dark_grey"
+                android:gravity="center"
+                android:background="@drawable/text_view_result_style"/>
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/map"
+                android:layout_width="match_parent"
+                android:layout_height="400dp" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

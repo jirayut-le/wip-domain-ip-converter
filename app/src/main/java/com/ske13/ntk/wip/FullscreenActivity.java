@@ -15,24 +15,30 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
+
 import static com.ske13.ntk.wip.Converter.convert;
 
+public class FullscreenActivity extends AppCompatActivity implements OnMapReadyCallback{
 
-/**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- */
-public class FullscreenActivity extends AppCompatActivity {
-
-    /**
-     * Some older devices needs a small delay between UI widget updates
-     * and a change of the status and navigation bar.
-     */
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
     private View mContentView;
     private EditText editText;
-    private TextView resultTextView;
+    private TextView resultTextView, countryTextView;
+
+    private GoogleMap googleMap;
+    private MapView mapView;
+
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
         @Override
@@ -50,10 +56,10 @@ public class FullscreenActivity extends AppCompatActivity {
                     | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         }
     };
+
     private final Runnable mShowPart2Runnable = new Runnable() {
         @Override
         public void run() {
-            // Delayed display of UI elements
             ActionBar actionBar = getSupportActionBar();
             if (actionBar != null) {
                 actionBar.show();
@@ -67,11 +73,6 @@ public class FullscreenActivity extends AppCompatActivity {
             hide();
         }
     };
-    /**
-     * Touch listener to use for in-layout UI controls to delay hiding the
-     * system UI. This is to prevent the jarring behavior of controls going away
-     * while interacting with activity UI.
-     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +89,14 @@ public class FullscreenActivity extends AppCompatActivity {
         mContentView = findViewById(R.id.fullscreen_content);
         editText = findViewById(R.id.input);
         resultTextView = findViewById(R.id.result);
+        countryTextView = findViewById(R.id.country);
+
+        mapView = findViewById(R.id.map);
+        if(mapView != null){
+            mapView.onCreate(null);
+            mapView.onResume();
+            mapView.getMapAsync(this);
+        }
 
         RelativeLayout relativeLayout = findViewById(R.id.Layout);
         AnimationDrawable animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
@@ -107,8 +116,14 @@ public class FullscreenActivity extends AppCompatActivity {
     }
 
     private void submit(){
-        String result = convert(editText.getText().toString());
-        this.resultTextView.setText(result);
+        ArrayList<String> result = convert(editText.getText().toString());
+        setText(result);
+        setLocation(Double.parseDouble(result.get(2)), Double.parseDouble(result.get(3)));
+    }
+
+    private void setText(ArrayList<String> result ){
+        this.resultTextView.setText(result.get(0).toString());
+        this.countryTextView.setText(result.get(1).toString());
     }
 
     private void resize(){
@@ -137,10 +152,6 @@ public class FullscreenActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-
-        // Trigger the initial hide() shortly after the activity has been
-        // created, to briefly hint to the user that UI controls
-        // are available.
         delayedHide(100);
     }
 
@@ -165,5 +176,20 @@ public class FullscreenActivity extends AppCompatActivity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        MapsInitializer.initialize(getBaseContext());
+        this.googleMap = googleMap;
+        this.googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+    }
+
+    private void setLocation(double lat, double lng){
+        this.googleMap.clear();
+        this.googleMap.addMarker(new MarkerOptions().position(new LatLng( lat, lng)).title("HI").snippet("Hello"));
+        CameraPosition cameraPosition = CameraPosition.builder().target(new LatLng( lat, lng)).zoom(5).bearing(0).tilt(45).build();
+        this.googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 }
