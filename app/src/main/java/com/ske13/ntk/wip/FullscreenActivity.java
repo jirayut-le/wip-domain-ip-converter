@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
@@ -117,8 +118,15 @@ public class FullscreenActivity extends AppCompatActivity implements OnMapReadyC
 
     private void submit(){
         ArrayList<String> result = convert(editText.getText().toString());
-        setText(result);
-        setLocation(Double.parseDouble(result.get(2)), Double.parseDouble(result.get(3)));
+        if(result.size() == 0 ) {
+           result.add("Error incorrect input!");
+           result.add("Error incorrect input!");
+           result.add("0");
+           result.add("0");
+        }
+            setText(result);
+            setLocation(Double.parseDouble(result.get(2)), Double.parseDouble(result.get(3)));
+
     }
 
     private void setText(ArrayList<String> result ){
